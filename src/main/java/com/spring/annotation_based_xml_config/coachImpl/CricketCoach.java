@@ -3,11 +3,22 @@ package com.spring.annotation_based_xml_config.coachImpl;
 
 import com.spring.annotation_based_xml_config.coach.Coach;
 import com.spring.annotation_based_xml_config.dependency.FortuneService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CricketCoach implements Coach {
 
+    @Autowired
+    @Qualifier(value = "randomFortuneServiceImpl")
     private FortuneService fortuneService;
+
+    @Value(value = "${spring.annotation.based.xml.config.email}")
     private String emailAddress;
+
+    @Value(value = "${spring.annotation.based.xml.config.team}")
     private String team;
 
     //placing emphasis on no-arg constructor for setter injection

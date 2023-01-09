@@ -3,14 +3,14 @@ package com.spring.annotation_based_xml_config.coachImpl;
 
 import com.spring.annotation_based_xml_config.coach.Coach;
 import com.spring.annotation_based_xml_config.dependency.FortuneService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TrackCoach implements Coach {
 
     private FortuneService fortuneService;
-
-    public TrackCoach(FortuneService fortuneService) {
-        this.fortuneService = fortuneService;
-    }
 
     //BEAN LIFECYCLE
     /*
@@ -49,6 +49,11 @@ public class TrackCoach implements Coach {
 
     @Override
     public String getDailyFortune() {
-        return "Baseball coach " + fortuneService.getFortune();
+        return fortuneService.getFortune();
+    }
+
+    @Autowired
+    public void methodLevelInjection(@Qualifier("happyFortuneServiceImpl") FortuneService fortuneService) {
+        this.fortuneService = fortuneService;
     }
 }

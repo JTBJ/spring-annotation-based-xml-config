@@ -4,6 +4,8 @@ package com.spring.annotation_based_xml_config.coachImpl;
 import com.spring.annotation_based_xml_config.coach.Coach;
 import com.spring.annotation_based_xml_config.dependency.FortuneService;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,7 +13,10 @@ public class BaseballCoach implements Coach {
 
     private FortuneService fortuneService;
 
-    public BaseballCoach(FortuneService fortuneService) {
+    //@Autowired is not necessary for this scenario as Spring will inject fortuneService for constructor
+    //https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-autowired-annotation
+    @Autowired
+    public BaseballCoach(@Qualifier("happyFortuneServiceImpl") FortuneService fortuneService) {
         this.fortuneService = fortuneService;
     }
 
@@ -22,7 +27,7 @@ public class BaseballCoach implements Coach {
 
     @Override
     public String getDailyFortune() {
-        return "Track coach " + fortuneService.getFortune();
+        return fortuneService.getFortune();
     }
 
     private void init() {
